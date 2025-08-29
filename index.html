@@ -30,43 +30,18 @@
         .modal-content {
             transform: translateY(-20px);
             transition: transform 0.3s ease-in-out;
-            width: 90%; /* Make modal wider for iframe */
-            max-width: 1000px; /* Maximum width for larger screens */
-            height: 90%; /* Make modal taller for iframe */
-            max-height: 90vh; /* Maximum height relative to viewport */
-            display: flex; /* Use flexbox for content arrangement */
-            flex-direction: column;
+            width: 90%;
+            max-width: 500px; /* Max width for text content modal */
+            max-height: 80vh; /* Max height for text content modal */
+            overflow-y: auto; /* Enable scrolling for long descriptions */
         }
         .modal.visible .modal-content {
             transform: translateY(0);
         }
-        .iframe-container {
-            flex-grow: 1; /* Allows iframe to take available space */
-            position: relative;
-        }
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 8px; /* Match modal corners */
-        }
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #3b82f6; /* Blue spinner */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -20px; /* Center vertically */
-            margin-left: -20px; /* Center horizontally */
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Style for description text cursor */
+        .event-description {
+            cursor: pointer;
+            @apply hover:underline; /* Add underline on hover for better UX */
         }
     </style>
 </head>
@@ -85,50 +60,54 @@
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
             <!-- Event: Dreamwork -->
-            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                  data-event-name="Dreamwork"
-                 data-event-image="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork"
-                 data-event-link="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=5925&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent">
-                <img src="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork" alt="Dreamwork" class="w-full h-48 object-cover object-center rounded-t-xl">
+                 data-full-description="Dreamwork is an immersive experience where your creativity takes flight! Participate in challenges, collaborate with other dreamers, and bring your most imaginative ideas to life. This event fosters innovation and artistic expression, offering unique tools and platforms to showcase your talent. Don't miss the opportunity to transform your dreams into reality!">
+                <a href="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=5925&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent" class="block">
+                    <img src="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork" alt="Dreamwork" class="w-full h-48 object-cover object-center rounded-t-xl">
+                </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
-                    <p class="text-gray-600 text-sm">Dive into a world of imagination and creativity with Dreamwork!</p>
+                    <p class="text-gray-600 text-sm event-description">Dive into a world of imagination and creativity with Dreamwork! Click for full details.</p>
                 </div>
             </div>
 
             <!-- Event: Stat Treasure -->
-            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                  data-event-name="Stat Treasure"
-                 data-event-image="https://placehold.co/800x600/663399/ffffff?text=Stat+Treasure"
-                 data-event-link="https://m.starmakerstudios.com/a-vue3/spa-rhapsody-music/trans?promotion_id=2711&showBar=0&showNavigation=false&sp=game_center&game_id=13&_sxiq_open_origin=game_center&game_id=13">
-                <img src="https://placehold.co/800x600/663399/ffffff?text=Stat+Treasure" alt="Stat Treasure" class="w-full h-48 object-cover object-center rounded-t-xl">
+                 data-full-description="Embark on a thrilling journey to uncover hidden Stat Treasures! This event challenges your strategic thinking and ability to collect valuable statistics and rewards. Compete against others, decipher clues, and unlock achievements as you progress through various levels. The more stats you gather, the greater your glory and exclusive prizes!">
+                <a href="https://m.starmakerstudios.com/a-vue3/spa-rhapsody-music/trans?promotion_id=2711&showBar=0&showNavigation=false&sp=game_center&game_id=13&_sxiq_open_origin=game_center&game_id=13" class="block">
+                    <img src="https://placehold.co/800x600/663399/ffffff?text=Stat+Treasure" alt="Stat Treasure" class="w-full h-48 object-cover object-center rounded-t-xl">
+                </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Stat Treasure</h2>
-                    <p class="text-gray-600 text-sm">Uncover hidden gems and track your progress in Stat Treasure.</p>
+                    <p class="text-gray-600 text-sm event-description">Uncover hidden gems and track your progress in Stat Treasure. Click for full details.</p>
                 </div>
             </div>
 
             <!-- Event: Ascend Glory -->
-            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                  data-event-name="Ascend Glory"
-                 data-event-image="https://placehold.co/800x600/8A2BE2/ffffff?text=Ascend+Glory"
-                 data-event-link="https://m.starmakerstudios.com/zeus?showBar=0&showNavigation=false&pg_rf_ca_vn=1756451729&sp=game_center&game_id=29&_sxiq_ope">
-                <img src="https://placehold.co/800x600/8A2BE2/ffffff?text=Ascend+Glory" alt="Ascend Glory" class="w-full h-48 object-cover object-center rounded-t-xl">
+                 data-full-description="Ascend to new heights and achieve ultimate glory in this challenging event! Test your skills, overcome obstacles, and prove your prowess to earn a place among the legends. With various tiers and competitive leaderboards, Ascend Glory offers an exhilarating experience for those who dare to reach the top. Exclusive rewards await the champions!">
+                <a href="https://m.starmakerstudios.com/zeus?showBar=0&showNavigation=false&pg_rf_ca_vn=1756451729&sp=game_center&game_id=29&_sxiq_ope" class="block">
+                    <img src="https://placehold.co/800x600/8A2BE2/ffffff?text=Ascend+Glory" alt="Ascend Glory" class="w-full h-48 object-cover object-center rounded-t-xl">
+                </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Ascend Glory</h2>
-                    <p class="text-gray-600 text-sm">Strive for greatness and ascend to new heights in this epic event!</p>
+                    <p class="text-gray-600 text-sm event-description">Strive for greatness and ascend to new heights in this epic event! Click for full details.</p>
                 </div>
             </div>
 
             <!-- Event: Crazy Monster -->
-            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                  data-event-name="Crazy Monster"
-                 data-event-image="https://placehold.co/800x600/4B0082/ffffff?text=Crazy+Monster"
-                 data-event-link="https://m.starmakerstudios.com/a-vue3/spa-crazy-monster?promotion_id=37838&showBar=0&showNavigation=false&heightPercent=80&co">
-                <img src="https://placehold.co/800x600/4B0082/ffffff?text=Crazy+Monster" alt="Crazy Monster" class="w-full h-48 object-cover object-center rounded-t-xl">
+                 data-full-description="Prepare for an encounter with the wackiest and wildest creatures in Crazy Monster! This fun-filled event is packed with exciting challenges, mini-games, and opportunities to capture unique monsters. Gather your friends, team up, and explore a whimsical world full of surprises. Collect them all and become the ultimate monster trainer!">
+                <a href="https://m.starmakerstudios.com/a-vue3/spa-crazy-monster?promotion_id=37838&showBar=0&showNavigation=false&heightPercent=80&co" class="block">
+                    <img src="https://placehold.co/800x600/4B0082/ffffff?text=Crazy+Monster" alt="Crazy Monster" class="w-full h-48 object-cover object-center rounded-t-xl">
+                </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Crazy Monster</h2>
-                    <p class="text-gray-600 text-sm">Encounter wild creatures and exciting challenges in Crazy Monster!</p>
+                    <p class="text-gray-600 text-sm event-description">Encounter wild creatures and exciting challenges in Crazy Monster! Click for full details.</p>
                 </div>
             </div>
 
@@ -142,95 +121,64 @@
         <p>&copy; 2025 Starmaker. All rights reserved.</p>
     </footer>
 
-    <!-- Modal View -->
-    <div id="eventModal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-        <div class="modal-content bg-white rounded-xl shadow-2xl p-6 relative flex flex-col">
-            <button id="closeModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold transition-transform duration-200 transform hover:scale-110 z-10">
+    <!-- Modal View for Description -->
+    <div id="descriptionModal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="modal-content bg-white rounded-xl shadow-2xl p-6 relative">
+            <button id="closeDescriptionModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold transition-transform duration-200 transform hover:scale-110 z-10">
                 &times;
             </button>
-            <h3 id="modalName" class="text-3xl font-extrabold text-gray-900 mb-3 text-center"></h3>
-            <div class="iframe-container flex-grow relative">
-                <div id="loadingSpinner" class="loading-spinner hidden"></div>
-                <iframe id="modalIframe" src="" title="Event Details" class="hidden"></iframe>
-            </div>
+            <h3 id="modalDescriptionName" class="text-3xl font-extrabold text-gray-900 mb-3 text-center"></h3>
+            <p id="modalFullDescriptionContent" class="text-gray-700 text-base leading-relaxed"></p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const eventCards = document.querySelectorAll('.event-card');
-            const eventModal = document.getElementById('eventModal');
-            const closeModalButton = document.getElementById('closeModal');
-            const modalName = document.getElementById('modalName');
-            const modalIframe = document.getElementById('modalIframe');
-            const loadingSpinner = document.getElementById('loadingSpinner');
+            const descriptionModal = document.getElementById('descriptionModal');
+            const closeDescriptionModalButton = document.getElementById('closeDescriptionModal');
+            const modalDescriptionName = document.getElementById('modalDescriptionName');
+            const modalFullDescriptionContent = document.getElementById('modalFullDescriptionContent');
+            const eventDescriptions = document.querySelectorAll('.event-description');
 
-            eventCards.forEach(card => {
-                card.addEventListener('click', () => {
+            // Handle clicks on event descriptions to open modal
+            eventDescriptions.forEach(desc => {
+                desc.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent any default action on the paragraph if it were wrapped in an anchor
+                    const card = desc.closest('.event-card');
                     const eventName = card.dataset.eventName;
-                    const eventLink = card.dataset.eventLink;
+                    const fullDescription = card.dataset.fullDescription;
 
-                    modalName.textContent = eventName;
-                    modalIframe.src = ''; // Clear previous src
-                    modalIframe.classList.add('hidden'); // Hide iframe initially
-                    loadingSpinner.classList.remove('hidden'); // Show spinner
+                    modalDescriptionName.textContent = eventName;
+                    modalFullDescriptionContent.textContent = fullDescription;
 
-                    eventModal.classList.add('visible');
-                    eventModal.classList.remove('hidden');
+                    descriptionModal.classList.add('visible');
+                    descriptionModal.classList.remove('hidden');
                     document.body.style.overflow = 'hidden'; // Prevent scrolling background
-
-                    // Load iframe content after modal is visible to ensure smooth animation
-                    setTimeout(() => {
-                        modalIframe.src = eventLink;
-                    }, 300); // Give a slight delay for modal transition
-
-                    modalIframe.onload = () => {
-                        loadingSpinner.classList.add('hidden'); // Hide spinner when iframe loads
-                        modalIframe.classList.remove('hidden'); // Show iframe
-                    };
-
-                    modalIframe.onerror = () => {
-                        loadingSpinner.classList.add('hidden');
-                        modalIframe.classList.add('hidden');
-                        modalName.textContent = `${eventName} (Link Error)`;
-                        // Changed alert to console.error and added a message to the modal content
-                        console.error('Could not load the external website. It might be blocked by the website itself (X-Frame-Options policy).');
-                        // You could add a visible error message inside the modal if needed
-                    };
                 });
             });
 
-            closeModalButton.addEventListener('click', () => {
-                eventModal.classList.add('hidden');
-                eventModal.classList.remove('visible');
+            // Close description modal
+            closeDescriptionModalButton.addEventListener('click', () => {
+                descriptionModal.classList.add('hidden');
+                descriptionModal.classList.remove('visible');
                 document.body.style.overflow = ''; // Restore scrolling
-                modalIframe.src = ''; // Stop any ongoing loading in the iframe
-                modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
-                loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
             });
 
-            // Close modal when clicking outside of the content
-            eventModal.addEventListener('click', (e) => {
-                // Check if the click target is the modal background itself, not a child of modal-content
-                if (e.target === eventModal) {
-                    eventModal.classList.add('hidden');
-                    eventModal.classList.remove('visible');
+            // Close description modal when clicking outside of the content
+            descriptionModal.addEventListener('click', (e) => {
+                if (e.target === descriptionModal) {
+                    descriptionModal.classList.add('hidden');
+                    descriptionModal.classList.remove('visible');
                     document.body.style.overflow = ''; // Restore scrolling
-                    modalIframe.src = ''; // Stop any ongoing loading in the iframe
-                    modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
-                    loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
                 }
             });
 
-            // Close modal with Escape key
+            // Close description modal with Escape key
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && eventModal.classList.contains('visible')) {
-                    eventModal.classList.add('hidden');
-                    eventModal.classList.remove('visible');
+                if (e.key === 'Escape' && descriptionModal.classList.contains('visible')) {
+                    descriptionModal.classList.add('hidden');
+                    descriptionModal.classList.remove('visible');
                     document.body.style.overflow = ''; // Restore scrolling
-                    modalIframe.src = ''; // Stop any ongoing loading in the iframe
-                    modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
-                    loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
                 }
             });
         });
