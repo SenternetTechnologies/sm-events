@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +38,14 @@
         .modal.visible .modal-content {
             transform: translateY(0);
         }
-        /* Style for description text cursor */
-        .event-description {
-            cursor: pointer;
-            @apply hover:underline; /* Add underline on hover for better UX */
+        /* Profile image styling for the welcome modal */
+        .profile-image {
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 4px solid #a78bfa; /* Light purple border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -53,78 +56,64 @@
         <div class="container mx-auto text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight rounded-lg">Starmaker Dreamwork Gifts ✨</h1>
             <p class="mt-2 text-lg md:text-xl opacity-90">We currently create this website for personal use only!</p>
-            <marquee><h1 class="text-4xl md:text-5xl font-extrabold tracking-tight rounded-lg">Join Cansing family  -  668332✨</h1></marquee>
+            <marquee><h1 class="text-4xl md:text-5xl font-extrabold tracking-tight rounded-lg">Join Cansing family - 668332✨</h1></marquee>
         </div>
     </header>
 
     <!-- Main Content - Event Gallery -->
     <main class="flex-grow container mx-auto p-4 md:p-8">
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-3">
-        🔥𓆩🅲🆂𓆪🔥
-      </h1>
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-8 text-center text-purple-800">
+            🔥𓆩🅲🆂𓆪🔥
+        </h1>
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-            <!-- Event: Dreamwork -->
+            <!-- Event: Dreamwork Original -->
             <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                 data-event-name="Dreamwork Orginal"
-                 data-full-description="Its real dreamwork directly connect your main account!">
+                 data-event-name="Dreamwork Original">
                 <a href="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=5925&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent" class="block">
-                    <img src="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork Main" alt="Dreamwork" class="w-full h-48 object-cover object-center rounded-t-xl">
+                    <img src="https://cdn1.codashop.com/S/content/common/images/mno/starmaker_640x241.png" alt="Dreamwork" class="w-full h-48 object-cover object-center rounded-t-xl">
                 </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
-                    <p class="text-gray-600 text-sm event-description">Makkaley ithu main dreamwork, dont worry unga DREAMWORK datas mattume FETCH aagum.</p>
+                    <p class="text-gray-600 text-sm">Follow Admin: CS Eyekiller for more updates.</p>
                 </div>
             </div>
 
-            <!-- Event: Dreamwork1 -->
+            <!-- Event: Dreamwork Clone 1 -->
             <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                 data-event-name="Dreamwork Clone 1"
-                 data-full-description="Its real dreamwork directly connect your main account!">
+                 data-event-name="Dreamwork Clone 1">
                 <a href="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=2711&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent" class="block">
-                    <img src="https://placehold.co/800x600/6a0dad/a3fff3?text=Dreamwork Clone 1" alt="Dreamwork Orginal" class="w-full h-48 object-cover object-center rounded-t-xl">
+                    <img src="https://cdn1.codashop.com/S/content/common/images/mno/starmaker_640x241.png" alt="Dreamwork Clone 1" class="w-full h-48 object-cover object-center rounded-t-xl">
                 </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
-                    <p class="text-gray-600 text-sm event-description">First multiplier clone,  Touch to get rewards</p>
+                    <p class="text-gray-600 text-sm">Follow Admin: CS Eyekiller for more updates.</p>
                 </div>
             </div>
 
-
-              <!-- Event: Dreamwork2 -->
+            <!-- Event: Dreamwork Clone 2 -->
             <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                 data-event-name="Dreamwork Clone 2"
-                 data-full-description="Its real dreamwork directly connect your main account!">
+                 data-event-name="Dreamwork Clone 2">
                 <a href="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=37838&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent" class="block">
-                    <img src="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork Clone 2" alt="Dreamwork Clone 1" class="w-full h-48 object-cover object-center rounded-t-xl">
+                    <img src="https://cdn1.codashop.com/S/content/common/images/mno/starmaker_640x241.png" alt="Dreamwork Clone 2" class="w-full h-48 object-cover object-center rounded-t-xl">
                 </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
-                    <p class="text-gray-600 text-sm event-description">second multiplier clone,  Touch to get rewards</p>
+                    <p class="text-gray-600 text-sm">Follow Admin: CS Eyekiller for more updates.</p>
                 </div>
             </div>
 
-
-   <!-- Event: Dreamwork3 -->
+            <!-- Event: Dreamwork Clone 3 -->
             <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                 data-event-name="Dreamwork Clone 3  (Check tommorrow)"
-                 data-full-description="Its real dreamwork directly connect your main account!">
+                 data-event-name="Dreamwork Clone 3 (Check tomorrow)">
                 <a href="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=345&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent" class="block">
-                    <img src="https://placehold.co/800x600/6a0dad/fa2f5f?text=Dreamwork Clone 3" alt="Dreamwork Clone 3" class="w-full h-48 object-cover object-center rounded-t-xl">
+                    <img src="https://cdn1.codashop.com/S/content/common/images/mno/starmaker_640x241.png" alt="Dreamwork Clone 3" class="w-full h-48 object-cover object-center rounded-t-xl">
                 </a>
                 <div class="p-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
-                    <p class="text-gray-600 text-sm event-description"> third multiplier clone,  Touch to get rewards</p>
+                    <p class="text-gray-600 text-sm">Follow Admin: CS Eyekiller for more updates.</p>
                 </div>
             </div>
-
-
-
-
-
-            
-            
-            <!-- You can add more event cards here following the same structure -->
 
         </section>
     </main>
@@ -134,64 +123,59 @@
         <p>&copy; 2025 Starmaker. All rights reserved.</p>
     </footer>
 
-    <!-- Modal View for Description -->
-    <div id="descriptionModal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-        <div class="modal-content bg-white rounded-xl shadow-2xl p-6 relative">
-            <button id="closeDescriptionModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold transition-transform duration-200 transform hover:scale-110 z-10">
+    <!-- Welcome Note Modal -->
+    <div id="welcomeModal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="modal-content bg-white rounded-xl shadow-2xl p-8 relative flex flex-col items-center text-center space-y-4">
+            <button id="closeWelcomeModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold transition-transform duration-200 transform hover:scale-110 z-10">
                 &times;
             </button>
-            <h3 id="modalDescriptionName" class="text-3xl font-extrabold text-gray-900 mb-3 text-center"></h3>
-            <p id="modalFullDescriptionContent" class="text-gray-700 text-base leading-relaxed"></p>
+            <img src="https://improxy.starmakerstudios.com/tools/im/200/production/users/844424932338727/profile.jpg?ts=1755251036" alt="Profile Picture" class="profile-image">
+            <span class="text-3xl font-extrabold text-gray-900 leading-tight">🔥𓆩🅲🆂𓆪�🖤🄴ує༗🄺íℓℓєr𓅋𝆺𝅥𒁍</span>
+            <p class="text-gray-700 text-lg leading-relaxed mt-2">
+                Contact this profile for make new customised websites for starmaker or other uses....
+            </p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const descriptionModal = document.getElementById('descriptionModal');
-            const closeDescriptionModalButton = document.getElementById('closeDescriptionModal');
-            const modalDescriptionName = document.getElementById('modalDescriptionName');
-            const modalFullDescriptionContent = document.getElementById('modalFullDescriptionContent');
-            const eventDescriptions = document.querySelectorAll('.event-description');
+            const welcomeModal = document.getElementById('welcomeModal');
+            const closeWelcomeModalButton = document.getElementById('closeWelcomeModal');
 
-            // Handle clicks on event descriptions to open modal
-            eventDescriptions.forEach(desc => {
-                desc.addEventListener('click', (e) => {
-                    e.preventDefault(); // Prevent any default action on the paragraph if it were wrapped in an anchor
-                    const card = desc.closest('.event-card');
-                    const eventName = card.dataset.eventName;
-                    const fullDescription = card.dataset.fullDescription;
+            // Show welcome modal on load
+            welcomeModal.classList.add('visible');
+            welcomeModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
 
-                    modalDescriptionName.textContent = eventName;
-                    modalFullDescriptionContent.textContent = fullDescription;
+            // Auto-close welcome modal after 5 seconds
+            const autoCloseTimeout = setTimeout(() => {
+                closeWelcomeModal();
+            }, 5000); // 5000 milliseconds = 5 seconds
 
-                    descriptionModal.classList.add('visible');
-                    descriptionModal.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling background
-                });
-            });
-
-            // Close description modal
-            closeDescriptionModalButton.addEventListener('click', () => {
-                descriptionModal.classList.add('hidden');
-                descriptionModal.classList.remove('visible');
+            // Function to close the welcome modal
+            function closeWelcomeModal() {
+                welcomeModal.classList.add('hidden');
+                welcomeModal.classList.remove('visible');
                 document.body.style.overflow = ''; // Restore scrolling
+                clearTimeout(autoCloseTimeout); // Clear the auto-close timeout if closed manually
+            }
+
+            // Close welcome modal with button
+            closeWelcomeModalButton.addEventListener('click', () => {
+                closeWelcomeModal();
             });
 
-            // Close description modal when clicking outside of the content
-            descriptionModal.addEventListener('click', (e) => {
-                if (e.target === descriptionModal) {
-                    descriptionModal.classList.add('hidden');
-                    descriptionModal.classList.remove('visible');
-                    document.body.style.overflow = ''; // Restore scrolling
+            // Close welcome modal when clicking outside of the content
+            welcomeModal.addEventListener('click', (e) => {
+                if (e.target === welcomeModal) {
+                    closeWelcomeModal();
                 }
             });
 
-            // Close description modal with Escape key
+            // Close welcome modal with Escape key
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && descriptionModal.classList.contains('visible')) {
-                    descriptionModal.classList.add('hidden');
-                    descriptionModal.classList.remove('visible');
-                    document.body.style.overflow = ''; // Restore scrolling
+                if (e.key === 'Escape' && welcomeModal.classList.contains('visible')) {
+                    closeWelcomeModal();
                 }
             });
         });
