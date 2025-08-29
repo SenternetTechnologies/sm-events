@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starmaker All Events Gallery</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f7fafc; /* Light gray background */
+        }
+        /* Custom modal animation */
+        .modal {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
+            width: 90%; /* Make modal wider for iframe */
+            max-width: 1000px; /* Maximum width for larger screens */
+            height: 90%; /* Make modal taller for iframe */
+            max-height: 90vh; /* Maximum height relative to viewport */
+            display: flex; /* Use flexbox for content arrangement */
+            flex-direction: column;
+        }
+        .modal.visible .modal-content {
+            transform: translateY(0);
+        }
+        .iframe-container {
+            flex-grow: 1; /* Allows iframe to take available space */
+            position: relative;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px; /* Match modal corners */
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #3b82f6; /* Blue spinner */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -20px; /* Center vertically */
+            margin-left: -20px; /* Center horizontally */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white p-6 shadow-lg rounded-b-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight rounded-lg">Starmaker All Events Gallery ✨</h1>
+            <p class="mt-2 text-lg md:text-xl opacity-90">Explore our captivating events!</p>
+        </div>
+    </header>
+
+    <!-- Main Content - Event Gallery -->
+    <main class="flex-grow container mx-auto p-4 md:p-8">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+            <!-- Event: Dreamwork -->
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                 data-event-name="Dreamwork"
+                 data-event-image="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork"
+                 data-event-link="https://m.starmakerstudios.com/a/spa-dreamWorks/index?promotion_id=5925&showBar=0&showNavigation=false&new=true&isStatusBarStyle=true&sp=game_cent">
+                <img src="https://placehold.co/800x600/6a0dad/ffffff?text=Dreamwork" alt="Dreamwork" class="w-full h-48 object-cover object-center rounded-t-xl">
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Dreamwork</h2>
+                    <p class="text-gray-600 text-sm">Dive into a world of imagination and creativity with Dreamwork!</p>
+                </div>
+            </div>
+
+            <!-- Event: Stat Treasure -->
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                 data-event-name="Stat Treasure"
+                 data-event-image="https://placehold.co/800x600/663399/ffffff?text=Stat+Treasure"
+                 data-event-link="https://m.starmakerstudios.com/a-vue3/spa-rhapsody-music/trans?promotion_id=2711&showBar=0&showNavigation=false&sp=game_center&game_id=13&_sxiq_open_origin=game_center&game_id=13">
+                <img src="https://placehold.co/800x600/663399/ffffff?text=Stat+Treasure" alt="Stat Treasure" class="w-full h-48 object-cover object-center rounded-t-xl">
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Stat Treasure</h2>
+                    <p class="text-gray-600 text-sm">Uncover hidden gems and track your progress in Stat Treasure.</p>
+                </div>
+            </div>
+
+            <!-- Event: Ascend Glory -->
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                 data-event-name="Ascend Glory"
+                 data-event-image="https://placehold.co/800x600/8A2BE2/ffffff?text=Ascend+Glory"
+                 data-event-link="https://m.starmakerstudios.com/zeus?showBar=0&showNavigation=false&pg_rf_ca_vn=1756451729&sp=game_center&game_id=29&_sxiq_ope">
+                <img src="https://placehold.co/800x600/8A2BE2/ffffff?text=Ascend+Glory" alt="Ascend Glory" class="w-full h-48 object-cover object-center rounded-t-xl">
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Ascend Glory</h2>
+                    <p class="text-gray-600 text-sm">Strive for greatness and ascend to new heights in this epic event!</p>
+                </div>
+            </div>
+
+            <!-- Event: Crazy Monster -->
+            <div class="event-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                 data-event-name="Crazy Monster"
+                 data-event-image="https://placehold.co/800x600/4B0082/ffffff?text=Crazy+Monster"
+                 data-event-link="https://m.starmakerstudios.com/a-vue3/spa-crazy-monster?promotion_id=37838&showBar=0&showNavigation=false&heightPercent=80&co">
+                <img src="https://placehold.co/800x600/4B0082/ffffff?text=Crazy+Monster" alt="Crazy Monster" class="w-full h-48 object-cover object-center rounded-t-xl">
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Crazy Monster</h2>
+                    <p class="text-gray-600 text-sm">Encounter wild creatures and exciting challenges in Crazy Monster!</p>
+                </div>
+            </div>
+
+            <!-- You can add more event cards here following the same structure -->
+
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white p-6 text-center mt-8 rounded-t-lg">
+        <p>&copy; 2025 Starmaker. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal View -->
+    <div id="eventModal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="modal-content bg-white rounded-xl shadow-2xl p-6 relative flex flex-col">
+            <button id="closeModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold transition-transform duration-200 transform hover:scale-110 z-10">
+                &times;
+            </button>
+            <h3 id="modalName" class="text-3xl font-extrabold text-gray-900 mb-3 text-center"></h3>
+            <div class="iframe-container flex-grow relative">
+                <div id="loadingSpinner" class="loading-spinner hidden"></div>
+                <iframe id="modalIframe" src="" title="Event Details" class="hidden"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const eventCards = document.querySelectorAll('.event-card');
+            const eventModal = document.getElementById('eventModal');
+            const closeModalButton = document.getElementById('closeModal');
+            const modalName = document.getElementById('modalName');
+            const modalIframe = document.getElementById('modalIframe');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            eventCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const eventName = card.dataset.eventName;
+                    const eventLink = card.dataset.eventLink;
+
+                    modalName.textContent = eventName;
+                    modalIframe.src = ''; // Clear previous src
+                    modalIframe.classList.add('hidden'); // Hide iframe initially
+                    loadingSpinner.classList.remove('hidden'); // Show spinner
+
+                    eventModal.classList.add('visible');
+                    eventModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling background
+
+                    // Load iframe content after modal is visible to ensure smooth animation
+                    setTimeout(() => {
+                        modalIframe.src = eventLink;
+                    }, 300); // Give a slight delay for modal transition
+
+                    modalIframe.onload = () => {
+                        loadingSpinner.classList.add('hidden'); // Hide spinner when iframe loads
+                        modalIframe.classList.remove('hidden'); // Show iframe
+                    };
+
+                    modalIframe.onerror = () => {
+                        loadingSpinner.classList.add('hidden');
+                        modalIframe.classList.add('hidden');
+                        modalName.textContent = `${eventName} (Link Error)`;
+                        // Changed alert to console.error and added a message to the modal content
+                        console.error('Could not load the external website. It might be blocked by the website itself (X-Frame-Options policy).');
+                        // You could add a visible error message inside the modal if needed
+                    };
+                });
+            });
+
+            closeModalButton.addEventListener('click', () => {
+                eventModal.classList.add('hidden');
+                eventModal.classList.remove('visible');
+                document.body.style.overflow = ''; // Restore scrolling
+                modalIframe.src = ''; // Stop any ongoing loading in the iframe
+                modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
+                loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
+            });
+
+            // Close modal when clicking outside of the content
+            eventModal.addEventListener('click', (e) => {
+                // Check if the click target is the modal background itself, not a child of modal-content
+                if (e.target === eventModal) {
+                    eventModal.classList.add('hidden');
+                    eventModal.classList.remove('visible');
+                    document.body.style.overflow = ''; // Restore scrolling
+                    modalIframe.src = ''; // Stop any ongoing loading in the iframe
+                    modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
+                    loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && eventModal.classList.contains('visible')) {
+                    eventModal.classList.add('hidden');
+                    eventModal.classList.remove('visible');
+                    document.body.style.overflow = ''; // Restore scrolling
+                    modalIframe.src = ''; // Stop any ongoing loading in the iframe
+                    modalIframe.classList.add('hidden'); // Ensure iframe is hidden on close
+                    loadingSpinner.classList.add('hidden'); // Ensure spinner is hidden on close
+                }
+            });
+        });
+    </script>
+</body>
+</html>
