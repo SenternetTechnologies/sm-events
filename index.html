@@ -1,620 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS Golden Week Event</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-        }
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-        .card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            max-width: 28rem;
-        }
-        input, button {
-            border-radius: 0.75rem;
-        }
-        .btn-primary {
-            background-color: #4a5568;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #2d3748;
-        }
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: #4a5568;
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background-color: #cbd5e0;
-        }
-        /* Game Canvas Styling */
-        #gameCanvas {
-            border: 2px solid #a0aec0;
-            background-color: #f7fafc;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            touch-action: none; /* Prevents browser scroll on touch */
-        }
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            animation: fadeIn 0.3s ease-out;
-            max-width: 24rem;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #4a5568;
-            animation: spin 1s ease infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-    </style>
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // Log all Firestore events to the console for debugging
-        setLogLevel('debug');
-        
-        // Global variables provided by the Canvas environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cansing Golden Week Event</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #fbd3e9, #bb377d);
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-        let db, auth, userId;
-        let unsubscribe;
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
 
-        const pages = document.querySelectorAll('.page');
-        const loginPage = document.getElementById('loginPage');
-        const homePage = document.getElementById('homePage');
-        const profilePage = document.getElementById('profilePage');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const sidInput = document.getElementById('sidInput');
-        const pinInput = document.getElementById('pinInput');
-        const csCoinsDisplay = document.getElementById('csCoinsDisplay');
-        const starmakerCoinsDisplay = document.getElementById('starmakerCoinsDisplay');
-        const timeSpentDisplay = document.getElementById('timeSpentDisplay');
-        const checkinBtn = document.getElementById('checkinBtn');
-        const messageModal = document.getElementById('messageModal');
-        const modalMessage = document.getElementById('modalMessage');
-        const profileSidDisplay = document.getElementById('profileSidDisplay');
-        const profileCsuidDisplay = document.getElementById('profileCsuidDisplay');
-        const usernameInput = document.getElementById('usernameInput');
-        const indianTimeDisplay = document.getElementById('indianTimeDisplay');
-        const malaysianTimeDisplay = document.getElementById('malaysianTimeDisplay');
-        const checkinMessage = document.getElementById('checkinMessage');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const ballTouchCountDisplay = document.getElementById('ballTouchCount');
+    input, button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+    }
 
-        let userProfile = null;
-        let sessionTimer = 0;
-        let ballTouchCount = 0;
-        let isAuthReady = false;
+    input {
+      width: 200px;
+    }
 
-        // --- Firebase Initialization and Authentication ---
-        if (firebaseConfig) {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
+    button {
+      background: gold;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    userId = user.uid;
-                    isAuthReady = true;
-                    console.log('User authenticated with ID:', userId);
-                    await handleAuth();
-                } else {
-                    console.log('User signed out or not authenticated. Signing in...');
-                    try {
-                        if (initialAuthToken) {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    } catch (error) {
-                        console.error('Authentication failed:', error);
-                    }
-                }
-            });
-        } else {
-            console.error("Firebase config is not available.");
-        }
+    button:hover {
+      transform: scale(1.05);
+    }
 
-        async function handleAuth() {
-            if (!isAuthReady) return;
+    #gameArea {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
 
-            const localCsuid = localStorage.getItem('CSUID');
-            if (localCsuid) {
-                console.log('Found CSUID in localStorage, checking for user data...');
-                const userDocRef = doc(db, 'artifacts', appId, 'users', localCsuid);
-                const userDocSnap = await getDoc(userDocRef);
-                if (userDocSnap.exists()) {
-                    console.log('User found. Logging in...');
-                    userProfile = userDocSnap.data();
-                    showPage('home');
-                    listenToUserData();
-                    startSessionTimer();
-                } else {
-                    console.log('CSUID not linked to a user. Showing login page.');
-                    showPage('login');
-                }
-            } else {
-                console.log('No CSUID found. Showing login page.');
-                showPage('login');
-            }
-            loadingOverlay.classList.add('hidden');
-        }
+    .wallets {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px;
+    }
 
-        function listenToUserData() {
-            if (unsubscribe) unsubscribe();
-            const userDocRef = doc(db, 'artifacts', appId, 'users', userProfile.csuid);
-            unsubscribe = onSnapshot(userDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    userProfile = docSnap.data();
-                    updateUI();
-                } else {
-                    console.error("User data no longer exists!");
-                    showPage('login');
-                }
-            }, (error) => {
-                console.error("Error listening to user data:", error);
-            });
-        }
+    .wallet {
+      background: rgba(0,0,0,0.2);
+      padding: 15px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.2em;
+    }
 
-        async function handleLogin() {
-            const sid = sidInput.value;
-            const pin = pinInput.value;
-            if (!sid || !pin) {
-                showMessage("Please enter both SID and PIN.");
-                return;
-            }
+    #ball {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00ff99, #006644);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5em;
+      margin-top: 30px;
+      animation: floatBall 2s infinite ease-in-out;
+    }
 
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', sid);
-                const userDocSnap = await getDoc(userDocRef);
-                if (!userDocSnap.exists()) {
-                    showMessage("User with this SID not found. Please register.");
-                    return;
-                }
-                const userData = userDocSnap.data();
-                if (userData.pin !== pin) {
-                    showMessage("Incorrect PIN.");
-                    return;
-                }
+    @keyframes floatBall {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
 
-                // Successful login
-                const csuid = crypto.randomUUID();
-                localStorage.setItem('CSUID', csuid);
-                await setDoc(userDocRef, { csuid: csuid }, { merge: true });
-                userProfile = { ...userData, csuid: csuid };
+    #profilePic {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: url('https://i.imgur.com/U6a6l8G.png') no-repeat center/cover;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
 
-                showMessage("Login successful!");
-                showPage('home');
-                listenToUserData();
-                startSessionTimer();
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
 
-            } catch (error) {
-                console.error("Login failed:", error);
-                showMessage("Login failed. Please try again.");
-            }
-        }
+    .modal-content {
+      background: #fff;
+      color: #000;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
 
-        async function handleRegister() {
-            const sid = sidInput.value;
-            const pin = pinInput.value;
-            if (!sid || !pin || pin.length !== 4) {
-                showMessage("Please enter a valid SID and a 4-digit PIN.");
-                return;
-            }
+    #exchangeBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ffd700;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 5px;
+    }
 
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', sid);
-                const userDocSnap = await getDoc(userDocRef);
-                if (userDocSnap.exists()) {
-                    showMessage("SID already exists. Please log in.");
-                    return;
-                }
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: lime;
+    }
 
-                const csuid = crypto.randomUUID();
-                localStorage.setItem('CSUID', csuid);
-
-                const newUser = {
-                    sid: sid,
-                    pin: pin,
-                    csuid: csuid,
-                    username: 'User_' + Math.floor(Math.random() * 10000),
-                    csCoins: 0,
-                    lastCheckinDate: new Date().toISOString().split('T')[0],
-                    dailyCheckinDone: false
-                };
-
-                await setDoc(userDocRef, newUser);
-                userProfile = newUser;
-
-                showMessage("Registration successful! You can now log in.");
-                showPage('home');
-                listenToUserData();
-                startSessionTimer();
-
-            } catch (error) {
-                console.error("Registration failed:", error);
-                showMessage("Registration failed. Please try again.");
-            }
-        }
-
-        async function handleCheckin() {
-            if (!userProfile) return;
-            const today = new Date().toISOString().split('T')[0];
-            if (userProfile.lastCheckinDate === today) {
-                checkinMessage.textContent = "You have already checked in today!";
-                return;
-            }
-
-            const dailyReward = 100;
-            const newCsCoins = userProfile.csCoins + dailyReward;
-            checkinMessage.textContent = "Daily check-in successful! You earned 100 CS coins.";
-
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', userProfile.sid);
-                await setDoc(userDocRef, {
-                    csCoins: newCsCoins,
-                    lastCheckinDate: today
-                }, { merge: true });
-            } catch (error) {
-                console.error("Failed to update check-in:", error);
-                showMessage("Failed to update check-in. Please try again.");
-            }
-        }
-
-        async function saveUsername() {
-            if (!userProfile) return;
-            const newUsername = usernameInput.value;
-            if (!newUsername) {
-                showMessage("Username cannot be empty.");
-                return;
-            }
-
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', userProfile.sid);
-                await setDoc(userDocRef, { username: newUsername }, { merge: true });
-                showMessage("Username updated successfully!");
-            } catch (error) {
-                console.error("Failed to update username:", error);
-                showMessage("Failed to update username.");
-            }
-        }
-
-        function startSessionTimer() {
-            if (sessionTimer) clearInterval(sessionTimer);
-            sessionTimer = setInterval(async () => {
-                if (!userProfile) return;
-                const userDocRef = doc(db, 'artifacts', appId, 'users', userProfile.sid);
-                const currentCsCoins = userProfile.csCoins || 0;
-                await setDoc(userDocRef, { csCoins: currentCsCoins + 10 }, { merge: true });
-            }, 60000); // 60000ms = 1 minute
-        }
-
-        function updateUI() {
-            if (!userProfile) return;
-            csCoinsDisplay.textContent = userProfile.csCoins.toFixed(2);
-            starmakerCoinsDisplay.textContent = (userProfile.csCoins / 1000).toFixed(2);
-            profileSidDisplay.textContent = userProfile.sid;
-            profileCsuidDisplay.textContent = userProfile.csuid;
-            usernameInput.value = userProfile.username;
-        }
-
-        function showMessage(msg) {
-            modalMessage.textContent = msg;
-            messageModal.classList.remove('hidden');
-        }
-
-        function showPage(pageName) {
-            pages.forEach(page => page.classList.add('hidden'));
-            if (pageName === 'login') {
-                loginPage.classList.remove('hidden');
-            } else if (pageName === 'home') {
-                homePage.classList.remove('hidden');
-                updateUI();
-            } else if (pageName === 'profile') {
-                profilePage.classList.remove('hidden');
-            }
-        }
-
-        // --- Time and Date Display ---
-        function updateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            
-            indianTimeDisplay.textContent = now.toLocaleString('en-IN', { ...options, timeZone: 'Asia/Kolkata' });
-            malaysianTimeDisplay.textContent = now.toLocaleString('en-MY', { ...options, timeZone: 'Asia/Kuala_Lumpur' });
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // --- Ball Drop Game ---
-        let balls = [];
-        const ballRadius = 20;
-        const ballGravity = 0.2;
-        const ballSpawnInterval = 1000;
-        let lastSpawnTime = 0;
-
-        function createBall() {
-            balls.push({
-                x: Math.random() * (canvas.width - 2 * ballRadius) + ballRadius,
-                y: -ballRadius,
-                vx: (Math.random() - 0.5) * 2,
-                vy: 0,
-                color: `#4a5568`
-            });
-        }
-
-        function drawBall(ball) {
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color;
-            ctx.fill();
-            ctx.closePath();
-            
-            ctx.fillStyle = "white";
-            ctx.font = "bold 14px Inter";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("CS", ball.x, ball.y);
-        }
-
-        function updateGame() {
-            const now = Date.now();
-            if (now - lastSpawnTime > ballSpawnInterval) {
-                createBall();
-                lastSpawnTime = now;
-            }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            balls = balls.filter(ball => ball.y < canvas.height + ballRadius);
-
-            balls.forEach(ball => {
-                ball.vy += ballGravity;
-                ball.x += ball.vx;
-                ball.y += ball.vy;
-
-                // Bounce off walls
-                if (ball.x + ballRadius > canvas.width || ball.x - ballRadius < 0) {
-                    ball.vx *= -1;
-                }
-                drawBall(ball);
-            });
-
-            requestAnimationFrame(updateGame);
-        }
-        
-        canvas.addEventListener('click', handleGameClick);
-        canvas.addEventListener('touchstart', handleGameClick);
-
-        async function handleGameClick(event) {
-            if (!userProfile) return;
-            event.preventDefault();
-
-            const rect = canvas.getBoundingClientRect();
-            const clientX = event.clientX || event.touches[0].clientX;
-            const clientY = event.clientY || event.touches[0].clientY;
-            const mouseX = clientX - rect.left;
-            const mouseY = clientY - rect.top;
-
-            for (let i = balls.length - 1; i >= 0; i--) {
-                const ball = balls[i];
-                const dx = mouseX - ball.x;
-                const dy = mouseY - ball.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < ballRadius) {
-                    const reward = 0.10;
-                    balls.splice(i, 1);
-                    ballTouchCount += 1;
-                    ballTouchCountDisplay.textContent = ballTouchCount;
-
-                    // Update Firestore with the new coins
-                    try {
-                        const userDocRef = doc(db, 'artifacts', appId, 'users', userProfile.sid);
-                        const currentCsCoins = userProfile.csCoins || 0;
-                        await setDoc(userDocRef, { csCoins: currentCsCoins + reward }, { merge: true });
-                    } catch (error) {
-                        console.error("Failed to update coins from game:", error);
-                    }
-                    return;
-                }
-            }
-        }
-        
-        // Ensure canvas dimensions are set correctly on load and resize
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = Math.min(400, window.innerHeight * 0.5);
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.onload = function() {
-            // Wait for auth state to be ready
-            const checkAuthInterval = setInterval(() => {
-                if (isAuthReady) {
-                    clearInterval(checkAuthInterval);
-                    updateGame();
-                }
-            }, 100);
-        };
-
-        // --- Event Listeners ---
-        document.getElementById('loginBtn').addEventListener('click', handleLogin);
-        document.getElementById('registerBtn').addEventListener('click', handleRegister);
-        document.getElementById('checkinBtn').addEventListener('click', handleCheckin);
-        document.getElementById('saveUsernameBtn').addEventListener('click', saveUsername);
-        document.getElementById('viewProfileBtn').addEventListener('click', () => showPage('profile'));
-        document.getElementById('backToHomeBtn').addEventListener('click', () => showPage('home'));
-        document.getElementById('closeModalBtn').addEventListener('click', () => messageModal.classList.add('hidden'));
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth);
-            localStorage.removeItem('CSUID');
-            if(unsubscribe) unsubscribe();
-            if(sessionTimer) clearInterval(sessionTimer);
-            showPage('login');
-        });
-
-    </script>
+  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div id="loadingOverlay" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-        <div class="spinner"></div>
+<body>
+
+<div id="loginPage" class="centered">
+  <h1>Cansing Golden Week Event</h1>
+  <input id="sidInput" placeholder="Enter SID" />
+  <input id="pinInput" placeholder="Enter PIN" type="password" />
+  <button onclick="login()">Enter</button>
+</div>
+
+<div id="gameArea">
+  <div id="profilePic" onclick="openModal()"></div>
+
+  <h2>Welcome to Cansing Golden Week</h2>
+
+  <div class="wallets">
+    <div class="wallet">
+      🟢 CS Wallet: <span id="csWallet">0</span> CS
     </div>
-    
-    <!-- Message Modal -->
-    <div id="messageModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <p id="modalMessage" class="text-gray-800 text-lg mb-4"></p>
-            <button id="closeModalBtn" class="px-6 py-2 btn-primary">OK</button>
-        </div>
+    <div class="wallet">
+      🌟 StarMaker Wallet: <span id="starmakerWallet">0</span> Coins
     </div>
+  </div>
 
-    <!-- Main App Container -->
-    <div class="app-container">
+  <div id="ball" onclick="crackBall()">💥</div>
+  <button id="exchangeBtn" onclick="exchangeCoins()">Exchange to StarMaker Coins</button>
+  <div class="message" id="messageBox"></div>
+</div>
 
-        <!-- Login Page -->
-        <div id="loginPage" class="page card text-center hidden">
-            <h1 class="text-4xl font-bold text-gray-800 mb-6">CS Golden Week Event</h1>
-            <p class="text-gray-600 mb-8">Login or Register to earn rewards!</p>
-            <div class="space-y-4">
-                <input type="text" id="sidInput" placeholder="Enter SID (e.g., 12345)" class="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-gray-500 transition duration-300">
-                <input type="password" id="pinInput" placeholder="Enter 4-digit PIN" class="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-gray-500 transition duration-300">
-            </div>
-            <div class="mt-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button id="loginBtn" class="flex-1 px-6 py-3 btn-primary">Login</button>
-                <button id="registerBtn" class="flex-1 px-6 py-3 btn-secondary">Register</button>
-            </div>
-        </div>
+<!-- Profile Modal -->
+<div class="modal" id="profileModal">
+  <div class="modal-content">
+    <h3>User Profile</h3>
+    <p><strong>Username:</strong> <span id="modalUsername"></span></p>
+    <p><strong>SID:</strong> <span id="modalSID"></span></p>
+    <p><strong>PIN:</strong> <span id="modalPIN"></span></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
 
-        <!-- Home Page -->
-        <div id="homePage" class="page card hidden">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">Welcome!</h1>
-                <p class="text-gray-600 mb-4">CS Golden Week Event</p>
-            </div>
+<script>
+  let csCoins = 0;
+  let starmakerCoins = 0;
+  let username = "DemoUser";
+  let sid = "";
+  let pin = "";
 
-            <div class="flex justify-between items-center mb-6 text-sm md:text-base">
-                <div class="flex-1 text-center border-r-2 border-gray-200 pr-2">
-                    <p class="text-gray-500">Indian Time</p>
-                    <p id="indianTimeDisplay" class="font-semibold text-gray-700"></p>
-                </div>
-                <div class="flex-1 text-center pl-2">
-                    <p class="text-gray-500">Malaysian Time</p>
-                    <p id="malaysianTimeDisplay" class="font-semibold text-gray-700"></p>
-                </div>
-            </div>
+  function login() {
+    sid = document.getElementById('sidInput').value || "123456";
+    pin = document.getElementById('pinInput').value || "0000";
+    document.getElementById('loginPage').style.display = "none";
+    document.getElementById('gameArea').style.display = "flex";
+  }
 
-            <div class="grid grid-cols-2 gap-4 text-center text-white mb-6">
-                <div class="bg-gray-700 p-4 rounded-xl shadow-md">
-                    <p class="text-lg font-bold">CS Coins</p>
-                    <p id="csCoinsDisplay" class="text-3xl font-extrabold mt-1">0.00</p>
-                </div>
-                <div class="bg-gray-700 p-4 rounded-xl shadow-md">
-                    <p class="text-lg font-bold">Starmaker</p>
-                    <p id="starmakerCoinsDisplay" class="text-3xl font-extrabold mt-1">0.00</p>
-                </div>
-            </div>
+  function crackBall() {
+    csCoins += 0.10;
+    updateWallets();
+    animateBall();
+  }
 
-            <div class="text-center mb-6">
-                <button id="checkinBtn" class="w-full px-6 py-3 btn-primary text-xl font-semibold">Daily Check-In</button>
-                <p id="checkinMessage" class="mt-2 text-sm text-gray-500"></p>
-            </div>
-            
-            <p class="text-sm text-center text-gray-500 mb-4">Earn 10 CS coins per minute spent on the website.</p>
-            
-            <div class="bg-gray-50 p-4 rounded-xl shadow-inner mb-6 text-center">
-                <h2 class="text-xl font-bold text-gray-800 mb-2">CS Ball Drop Game</h2>
-                <canvas id="gameCanvas" class="w-full"></canvas>
-                <div class="mt-2 text-gray-600">
-                    <p class="font-semibold">CS Coins from game: <span id="ballTouchCount">0</span></p>
-                </div>
-            </div>
+  function animateBall() {
+    const ball = document.getElementById('ball');
+    ball.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+      ball.style.transform = 'scale(1)';
+    }, 100);
+  }
 
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button id="viewProfileBtn" class="flex-1 px-6 py-3 btn-secondary">View Profile</button>
-                <button id="logoutBtn" class="flex-1 px-6 py-3 btn-secondary">Logout</button>
-            </div>
-        </div>
+  function updateWallets() {
+    document.getElementById('csWallet').textContent = csCoins.toFixed(2);
+    starmakerCoins = Math.floor(csCoins / 1000);
+    document.getElementById('starmakerWallet').textContent = starmakerCoins;
+  }
 
-        <!-- Profile Page -->
-        <div id="profilePage" class="page card hidden">
-            <h1 class="text-4xl font-bold text-gray-800 mb-6 text-center">User Profile</h1>
+  function exchangeCoins() {
+    const messageBox = document.getElementById('messageBox');
+    if (starmakerCoins >= 50) {
+      starmakerCoins -= 6; // Transaction cost
+      messageBox.style.color = "lime";
+      messageBox.textContent = "✅ Success! 50 StarMaker Coins exchanged. 6 Coins deducted as fee.";
+      csCoins = 0;
+      updateWallets();
+    } else {
+      messageBox.style.color = "red";
+      messageBox.textContent = "❌ You need at least 50 StarMaker Coins to exchange.";
+    }
+  }
 
-            <div class="space-y-4 mb-6">
-                <div>
-                    <p class="text-gray-600 text-sm">Your CSUID</p>
-                    <p id="profileCsuidDisplay" class="text-lg font-mono font-semibold text-gray-800 break-all"></p>
-                </div>
-                <div>
-                    <p class="text-gray-600 text-sm">Your SID</p>
-                    <p id="profileSidDisplay" class="text-lg font-semibold text-gray-800"></p>
-                </div>
-                <div>
-                    <label for="usernameInput" class="block text-gray-600 text-sm mb-1">Username</label>
-                    <input type="text" id="usernameInput" class="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-gray-500 transition duration-300">
-                </div>
-            </div>
+  function openModal() {
+    document.getElementById('modalUsername').textContent = username;
+    document.getElementById('modalSID').textContent = sid;
+    document.getElementById('modalPIN').textContent = pin;
+    document.getElementById('profileModal').style.display = 'flex';
+  }
 
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button id="saveUsernameBtn" class="flex-1 px-6 py-3 btn-primary">Save Username</button>
-                <button id="backToHomeBtn" class="flex-1 px-6 py-3 btn-secondary">Back to Home</button>
-            </div>
-        </div>
+  function closeModal() {
+    document.getElementById('profileModal').style.display = 'none';
+  }
+</script>
 
-    </div>
 </body>
 </html>
-
